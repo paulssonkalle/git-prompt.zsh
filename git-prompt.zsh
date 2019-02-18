@@ -25,7 +25,7 @@ setopt PROMPT_SUBST
 function gitprompt() {
     git status --branch --porcelain=v2 2>&1 | awk '
         BEGIN {
-            RED = "%F{magenta}";
+            RED = "%F{red}";
             GREEN = "%F{green}";
             NC = "%f";
 
