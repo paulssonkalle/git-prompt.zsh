@@ -25,12 +25,8 @@ setopt PROMPT_SUBST
 function gitprompt() {
     git status --branch --porcelain=v2 2>&1 | awk '
         BEGIN {
-            RED = "%F{red}";
-            MAGENTA = "%F{magenta}";
+            RED = "%F{magenta}";
             GREEN = "%F{green}";
-            BLUE = "%F{blue}";
-            BOLD = "%B";
-            NB = "%b";
             NC = "%f";
 
             fatal = 0;
@@ -84,57 +80,33 @@ function gitprompt() {
                 exit(1);
             }
 
-            printf "[";
-
-            printf "%s", MAGENTA
-            printf "%s", BOLD
-            if (head == "(detached)") {
-                printf ":%s", substr(oid, 0, 7);
-            } else {
-                printf "%s", head;
-            }
-            printf "%s", NB
             printf "%s", NC
-
-            if (behind < 0) {
-                printf "↓%d", behind * -1;
-            }
-
-            if (ahead > 0) {
-                printf "↑%d", ahead;
-            }
-
-            printf "|";
-
-            if (unmerged > 0) {
-                printf "%s", RED
-                printf "✖%d", unmerged;
-                printf "%s", NC
-            }
-
-            if (staged > 0) {
-                printf "%s", RED
-                printf "●%d", staged;
-                printf "%s", NC
-            }
-
-            if (unstaged > 0) {
-                printf "%s", BLUE
-                printf "✚%d", unstaged;
-                printf "%s", NC
-            }
-
-            if (untracked > 0) {
-                printf "…%d", untracked;
-            }
+	        printf " on";
 
             if (unmerged == 0 && staged == 0 && unstaged == 0 && untracked == 0) {
                 printf "%s", GREEN
-                printf "✔"
-                printf "%s", NC
+                printf "  ";                           
+                if (head == "(detached)") {
+                    printf ":%s", substr(oid, 0, 7);
+                } else {
+                    printf "%s ", head;
+                }
+            } else {
+                printf "%s", RED
+                printf "  ";            
+                if (head == "(detached)") {
+                    printf ":%s", substr(oid, 0, 7);
+                } else {
+                    printf "%s ", head;
+                }
             }
 
-            printf "] ";
+            # printf "%s", NB
+            printf "%s", NC
+
+            if (behind < 0 || ahead > 0) {
+		        printf "";
+            }
         }
     '
 }
