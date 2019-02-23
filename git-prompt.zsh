@@ -86,6 +86,7 @@ function gitprompt() {
             if (unmerged == 0 && staged == 0 && unstaged == 0 && untracked == 0) {
                 printf "%s", GREEN
                 printf "  ";                           
+                printf "%s", NC
                 if (head == "(detached)") {
                     printf ":%s", substr(oid, 0, 7);
                 } else {
@@ -94,6 +95,7 @@ function gitprompt() {
             } else {
                 printf "%s", RED
                 printf "  ";            
+                printf "%s", NC
                 if (head == "(detached)") {
                     printf ":%s", substr(oid, 0, 7);
                 } else {
